@@ -28,6 +28,13 @@ public class RecipeService {
         else {
             throw new IllegalStateException("Recipe Already Exists");
         }
+    }
 
+    public void deleteRecipe(Long id){
+        if (recipeRepository.existsById(id)){
+            recipeRepository.deleteById(id);
+        }else {
+            throw new IllegalStateException("Recipe with id: "+id+" does not exits");
+        }
     }
 }
