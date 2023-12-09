@@ -14,5 +14,5 @@ public class UserConfig {
 //            User amine = new User(1L,"amine.akrichi","amine123","amiene@gmail.com","amine","akrichi","hello im amine akrichi and im a student", Role.USER);
 //            userRepository.save(amine);
         };
-    };
+    }
 }
