@@ -1,29 +1,44 @@
 package com.example.dishdiscoveryapi.service;
 
-import com.example.dishdiscoveryapi.model.User;
+import com.example.dishdiscoveryapi.model.UserEntity;
 import com.example.dishdiscoveryapi.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository ;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public final UserDetailsService userDetailsService() {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                return userRepository.findByUsername(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " not found")
+                        );
+            }
+        };
     }
 
-    public List<User> getUsers(){
+
+
+    public List<UserEntity> getUsers(){
         return userRepository.findAll();
     }
 
-    public void addUser(User user){
-        if (userRepository.findById(user.getId()).get().getUsername().equals(user.getUsername())){
-            throw new IllegalStateException("User with id : "+user.getId()+" already exist in the database");
+    public void addUser(UserEntity user){
+        if (userRepository.findByUsername(user.getUsername()).isPresent()){
+            throw new IllegalStateException("User with username : "+user.getUsername()+" already exist in the database");
         }else {
             userRepository.save(user);
         }
@@ -39,8 +54,8 @@ public class UserService {
 
 
     @Transactional
-    public void updateUser(Long userId, User user){
-        User userToUpdate = userRepository.findById(userId)
+    public void updateUser(Long userId, UserEntity user){
+        UserEntity userToUpdate = userRepository.findById(userId)
                 .orElseThrow(
                         ()->{
                             new IllegalStateException("User with id: "+userId+" does not exist in the database");
@@ -49,11 +64,11 @@ public class UserService {
                 );
 
         userToUpdate.setEmail(user.getEmail());
-        userToUpdate.setName(user.getName());
+        userToUpdate.setFirstname(user.getFirstname());
         userToUpdate.setLastname(user.getLastname());
         userToUpdate.setDescription(user.getDescription());
         userToUpdate.setPassword(user.getPassword());
-        if (userRepository.getUserByUsername(user.getUsername()).isPresent()){
+        if (userRepository.findByUsername(user.getUsername()).isPresent()){
             throw new IllegalStateException("User with username: "+user.getUsername()+" already exists in the database");
         }else {
             userToUpdate.setUsername(user.getUsername());

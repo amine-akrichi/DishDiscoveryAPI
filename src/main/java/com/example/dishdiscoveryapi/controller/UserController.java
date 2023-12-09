@@ -1,10 +1,9 @@
 package com.example.dishdiscoveryapi.controller;
 
-import com.example.dishdiscoveryapi.model.User;
+import com.example.dishdiscoveryapi.model.UserEntity;
 import com.example.dishdiscoveryapi.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,7 +16,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsers() {
+    public List<UserEntity> getUsers() {
         return userService.getUsers();
     }
 
@@ -31,7 +30,7 @@ public class UserController {
 //    }
 
     @PostMapping
-    public void addUser(@RequestBody User user) {
+    public void addUser(@RequestBody UserEntity user) {
         userService.addUser(user);
     }
 
@@ -42,7 +41,7 @@ public class UserController {
 
 
     @PutMapping(path = "{userId}")
-    public void updateUser(@PathVariable Long userId, @RequestBody User user) {
+    public void updateUser(@PathVariable Long userId, @RequestBody UserEntity user) {
         userService.updateUser(userId,user);
     }
 

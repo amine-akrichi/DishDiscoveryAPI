@@ -14,8 +14,8 @@ public class RecipeConfig {
     @Bean
     CommandLineRunner commandLineRunner(RecipeRepository recipeRepository) {
         return args -> {
-            Recipe lablebi = new Recipe(LocalDate.now(), "Lablebi", "Bread soaked in chickpea soup mixed with Harissa and other condiments", "Tunisia", "vegan", 60, 5);
-            Recipe hamburger = new Recipe(LocalDate.now(), "Hamburger", "Brioche bun filled with a meat patty, mayo, ketchup, lettuce and tomato ", "USA", "Non-vegan", 20, 2);
+            Recipe lablebi = new Recipe(1L,LocalDate.now(), "Lablebi", "Bread soaked in chickpea soup mixed with Harissa and other condiments", "Tunisia", "vegan", 60, 5);
+            Recipe hamburger = new Recipe(2L,LocalDate.now(), "Hamburger", "Brioche bun filled with a meat patty, mayo, ketchup, lettuce and tomato ", "USA", "Non-vegan", 20, 2);
             recipeRepository.saveAll(
                     List.of(lablebi,hamburger)
             );
