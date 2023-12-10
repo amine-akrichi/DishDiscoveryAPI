@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(
@@ -30,6 +30,13 @@ public class UserEntity implements UserDetails {
     private String email;
     private String password;
     private String description;
+    @OneToMany(mappedBy = "user")
+    private List<Recipe> userRecipes;
+
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> userReviews;
+
     @Enumerated(EnumType.STRING)
     Role role;
 

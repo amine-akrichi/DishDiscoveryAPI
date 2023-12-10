@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Data
@@ -15,22 +16,28 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table
+@Table(name = "recipe")
 public class Recipe {
     @Id
     @GeneratedValue(
-            strategy = GenerationType.AUTO
+            strategy = GenerationType.IDENTITY
     )
     private Long id;
     private LocalDate creationDate;
     private String title;
     private String description;
-    private String country;
     private String type;
     //    private List<String> ingredients;
 //    private Map<Integer,String> steps;
 //    private Map<String,String> nutritionFacts;
     private int totalTime;
     private int servings;
+    @ManyToOne
+    private Country country;
+    @ManyToOne
+    private UserEntity user;
+
+    @OneToMany(mappedBy = "recipe")
+    private List<Review> reviews;
 
 }
