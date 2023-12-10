@@ -19,7 +19,7 @@ public class Review {
     )
     private Long id;
     private String title;
-    private String description;
+    private String comment;
     private int rating;
     @ManyToOne
     private UserEntity user;
