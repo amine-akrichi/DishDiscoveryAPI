@@ -26,18 +26,14 @@ public class Recipe {
     private LocalDate creationDate;
     private String title;
     private String description;
+    @Column(length = 50000)
+    private String recipe;
     private String type;
-    //    private List<String> ingredients;
-//    private Map<Integer,String> steps;
-//    private Map<String,String> nutritionFacts;
+    private String country;
     private int totalTime;
     private int servings;
-    @ManyToOne
-    private Country country;
-    @ManyToOne
-    private UserEntity user;
-
-    @OneToMany(mappedBy = "recipe")
-    private List<Review> reviews;
+    @Lob
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String image;
 
 }

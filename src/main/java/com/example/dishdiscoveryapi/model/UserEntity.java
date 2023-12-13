@@ -30,12 +30,11 @@ public class UserEntity implements UserDetails {
     private String email;
     private String password;
     private String description;
-    @OneToMany(mappedBy = "user")
-    private List<Recipe> userRecipes;
+    @Lob
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String profilePicture;
 
 
-    @OneToMany(mappedBy = "user")
-    private List<Review> userReviews;
 
     @Enumerated(EnumType.STRING)
     Role role;

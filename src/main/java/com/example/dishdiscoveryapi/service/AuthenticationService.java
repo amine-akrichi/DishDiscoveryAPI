@@ -43,10 +43,18 @@ public class AuthenticationService {
     public JwtAuthenticationResponse signin(SignInRequest request) {
 //        authenticationManager.authenticate(
 //                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        var user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid username or password."));
-        var jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+        if (!userRepository.findByUsername(request.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("Invalid username or password.");
+        }else if (!passwordEncoder.matches(request.getPassword(),userRepository.findByUsername(request.getUsername()).get().getPassword())){
+            throw new IllegalArgumentException("Invalid username or password.");
+        }else {
+            log.info("User with username: {} successfully logged in", request.getUsername());
+            var user = userRepository.findByUsername(request.getUsername())
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid username or password."));
+            var jwt = jwtService.generateToken(user);
+            return JwtAuthenticationResponse.builder().token(jwt).build();
+        }
+
     }
 
 }

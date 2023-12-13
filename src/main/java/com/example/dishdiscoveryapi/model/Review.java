@@ -21,10 +21,6 @@ public class Review {
     private String title;
     private String comment;
     private int rating;
-    @ManyToOne
-    private UserEntity user;
-
-    @ManyToOne
-    private Recipe recipe;
-
+    private Long userId;
+    private Long recipeId;
 }

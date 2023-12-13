@@ -6,24 +6,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="country")
-public class Country {
+public class Cuisine {
     @Id
     @GeneratedValue(
-            strategy = GenerationType.IDENTITY
+            strategy = GenerationType.AUTO
     )
     private Long id;
     private String name;
-    private String flag;
+    @Lob
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String image;
     private String description;
-    @OneToMany(mappedBy = "country")
-    private List<Recipe> recipes;
-
 }

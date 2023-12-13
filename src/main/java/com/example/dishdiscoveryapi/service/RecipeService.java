@@ -25,6 +25,7 @@ public class RecipeService {
 
     public void addNewRecipe(Recipe recipe) {
         if (!recipeRepository.existsById(recipe.getId())) {
+            recipe.setCreationDate(LocalDate.now());
             recipeRepository.save(recipe);
         } else {
             throw new IllegalStateException("Recipe Already Exists");
@@ -50,10 +51,14 @@ public class RecipeService {
                 );
         recipeToUpdate.setTitle(recipe.getTitle());
         recipeToUpdate.setDescription(recipe.getDescription());
-        recipeToUpdate.setCountry(recipe.getCountry());
+        //recipeToUpdate.setCountry(recipe.getCountry());
         recipeToUpdate.setType(recipe.getType());
         recipeToUpdate.setTotalTime(recipe.getTotalTime());
         recipeToUpdate.setServings(recipe.getServings());
 
+    }
+
+    public Optional<Recipe> getRecipe(Long recipeId) {
+        return recipeRepository.findById(recipeId);
     }
 }

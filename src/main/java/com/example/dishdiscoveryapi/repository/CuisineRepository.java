@@ -1,10 +1,10 @@
 package com.example.dishdiscoveryapi.repository;
 
-import com.example.dishdiscoveryapi.model.Country;
+import com.example.dishdiscoveryapi.model.Cuisine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CountryRepository extends JpaRepository<Country, Long>{
+public interface CuisineRepository extends JpaRepository<Cuisine, Long>{
 
 }
