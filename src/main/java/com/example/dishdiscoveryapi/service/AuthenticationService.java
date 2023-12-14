@@ -30,6 +30,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
+                .profilePicture(request.getProfilePicture())
                 .role(Role.ROLE_USER)
                 .build();
 

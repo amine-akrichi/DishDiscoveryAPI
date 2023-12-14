@@ -35,5 +35,6 @@ public class Recipe {
     @Lob
     @Column(columnDefinition = "MEDIUMTEXT")
     private String image;
+    private String username;
 
 }

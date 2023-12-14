@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +50,6 @@ public class UserService {
         }
     }
 
-
     @Transactional
     public void updateUser(Long userId, UserEntity user){
         UserEntity userToUpdate = userRepository.findById(userId)
@@ -60,16 +60,43 @@ public class UserService {
                         }
                 );
 
-        userToUpdate.setEmail(user.getEmail());
-        userToUpdate.setFirstname(user.getFirstname());
-        userToUpdate.setLastname(user.getLastname());
-        userToUpdate.setDescription(user.getDescription());
-        userToUpdate.setPassword(user.getPassword());
-        if (userRepository.findByUsername(user.getUsername()).isPresent()){
-            throw new IllegalStateException("User with username: "+user.getUsername()+" already exists in the database");
-        }else {
-            userToUpdate.setUsername(user.getUsername());
+        if(user.getEmail() !=null){
+            userToUpdate.setEmail(user.getEmail());
         }
+        if(user.getFirstname() !=null){
+            userToUpdate.setFirstname(user.getFirstname());
+        }
+        if(user.getLastname() !=null){
+            userToUpdate.setLastname(user.getLastname());
+        }
+        if(user.getDescription() !=null){
+            userToUpdate.setDescription(user.getDescription());
+        }
+        if(user.getPassword() !=null){
+            userToUpdate.setPassword(user.getPassword());
+        }
+        if(user.getProfilePicture() !=null){
+            userToUpdate.setProfilePicture(user.getProfilePicture());
+        }
+        if(user.getUsername() !=null){
+            if (userRepository.findByUsername(user.getUsername()).isPresent() && !userToUpdate.getUsername().equals(user.getUsername())){
+                throw new IllegalStateException("User with username: "+user.getUsername()+" already exists in the database");
+            }else {
+                userToUpdate.setUsername(user.getUsername());
+            }
+        }
+
+//        userToUpdate.setEmail(user.getEmail());
+//        userToUpdate.setFirstname(user.getFirstname());
+//        userToUpdate.setLastname(user.getLastname());
+//        userToUpdate.setDescription(user.getDescription());
+//        userToUpdate.setPassword(user.getPassword());
+//        userToUpdate.setProfilePicture(user.getProfilePicture());
+//        if (userRepository.findByUsername(user.getUsername()).isPresent() && !userToUpdate.getUsername().equals(user.getUsername())){
+//            throw new IllegalStateException("User with username: "+user.getUsername()+" already exists in the database");
+//        }else {
+//            userToUpdate.setUsername(user.getUsername());
+//        }
 
     }
 

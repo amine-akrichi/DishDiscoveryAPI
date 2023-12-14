@@ -61,4 +61,8 @@ public class RecipeService {
     public Optional<Recipe> getRecipe(Long recipeId) {
         return recipeRepository.findById(recipeId);
     }
+
+    public List<Recipe> getRecipeByUsername(String username) {
+        return recipeRepository.findByUsername(username);
+    }
 }

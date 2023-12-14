@@ -31,6 +31,11 @@ public class RecipeController {
     public Optional<Recipe> getRecipe(@PathVariable Long recipeId){
         return recipeService.getRecipe(recipeId);
     }
+
+    @GetMapping(path = "user/{username}")
+    public List<Recipe> getRecipeByUsername(@PathVariable String username){
+        return recipeService.getRecipeByUsername(username);
+    }
     @PostMapping()
     public void addNewRecipe(@RequestBody Recipe recipe
                             /* @RequestParam("imageFile") MultipartFile file*/){
